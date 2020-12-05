@@ -1,6 +1,6 @@
-**Earthquake Simulator Pro** is a browser application which lets you re-experience worldwide earthquakes.
+# Earthquake Simulator Pro 
 
-It is based on earthquake data of the U.S. Geological Survey (USGS) from the last 24 hours: http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson.
+This project is a browser application which lets you re-experience worldwide earthquakes. It is based on earthquake data of the U.S. Geological Survey (USGS) from the last 24 hours: http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson.
 
 
 
