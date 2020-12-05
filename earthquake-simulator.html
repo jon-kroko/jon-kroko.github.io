@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Earthquake Simulator Pro</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+
+    <body>
+        <script type="text/javascript">
+            alert("Trigger Warning: Earthquake Simulator Pro may cause epileptic seizures!");
+        </script>
+
+        <div id="anim_container">
+            <div id="animatable">
+                <div id="intro">
+                    <h1> Earthquake Simulator Pro </h1>
+                    <p> Imagine there has been an exciting earthquake in your area and you missed it. Sh**! Now what? Are you going to live with this void in your life? Will you accept it?</p>
+                    <p> No! Missing earthquakes was yesterday. Experience up-to-date earthquakes in your browser with <b>Earthquake Simulator Pro</b>.</p>
+                    <p> Using it is very simple: Explore the map below and simulate an earthquake by double-clicking its marker. The stronger the original quake, the wilder your browser experience. Have fuaaaAAAAAAAH...<br><br></p>
+                </div>
+
+                <div id="map"></div>
+
+                <div>
+                    <!-- URL is set in leaflet_map.js (avoid code duplication) -->
+                    <p id="sources"><br>Made by Kira Weinlein. The earthquake data has been taken from <a id="earthquake_data_url" href="">U.S. Geological Survey</a>.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Import map style and logic by Leaflet (https://leafletjs.com/) -->
+        <link rel="stylesheet"
+            href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+            integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+            crossorigin=""/>
+        <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+            integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+            crossorigin=""></script>
+
+        <!-- Script to initialize map and earthquake markers -->
+        <script type="text/javascript" src="leaflet_map.js"></script>
+    </body>
+</html>

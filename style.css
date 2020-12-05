@@ -1,0 +1,41 @@
+body {
+    background-color: #182828;
+    font: sans-serif;
+    width: 75%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+h1 {
+    color: sandybrown;
+    font-family: "Stencil Std", fantasy;
+    font-size: 50px;
+}
+
+p {
+    color: cornsilk;
+    font-family: "Courier New", monospace;
+    font-weight: normal;
+    font-size: 18px;
+}
+
+#map {
+    height: 400px;
+    width: 100%;
+}
+
+#animatable {
+    position: absolute;
+}
+
+#anim_container {
+    position: relative;
+}
+
+#sources {
+    font-size: 13px;
+}
+
+#earthquake_data_url {
+    color: sandybrown;
+}
