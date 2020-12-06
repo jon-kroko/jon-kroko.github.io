@@ -2,7 +2,7 @@
 var map = L.map('map').setView([20, -20], 2);
 
 // Add satellite images as map layer
-L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+var satelliteLayer = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
     maxZoom: 18,
     id: 'mapbox/satellite-streets-v11',
@@ -12,50 +12,10 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
 }).addTo(map);
 
 
-// Source of earthquake data
+// Add earthquakes to map - async because we need to wait for the HTTP response
+var earthquakeLayer = new L.layerGroup().addTo(map);
 url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson"
-document.getElementById("earthquake_data_url").href = url; // Set clickable link
-
-
-
-// Animate earthquake, depending on the original earthquake's magnitude
-function shake(magnitude) {
-    var el = document.getElementById("animatable");
-
-    // Set up magic numbers - they can be changed to prettify the animation
-    var max_frames = 100; // Animation duration in frames
-    var refresh_interval = 20; // Milliseconds
-    var speed = 0.42; // Stretch/compress the curve on the time axis
-    var amplifier = 42; // Make the shaking visible
-    // Simulation intensity should be based on magnitude
-    // Chose superlinear function to make differences more perceptible
-    var mag_factor = Math.pow(magnitude, 2);
-
-    var current_frame = 0;
-    var anim = setInterval(animate, refresh_interval);
-
-    function animate() {
-        if (current_frame >= max_frames) {
-            clearInterval(anim);    // End animation
-            el.style.top = '0px';   // Reset position
-        } else {
-            current_frame++;
-
-            // Decrease max. amplitude with time to end the animation smoothly
-            // --> Idea for future work: combine with exponential function to
-            //     imitate naturally damped oscillation
-            var damp_factor = ((max_frames - current_frame) / max_frames);
-
-            // Use sinus to create harmonic oscillation as a baseline
-            el.style.top = Math.sin(current_frame * speed) *
-                mag_factor * amplifier * damp_factor + 'px';
-        }
-    }
-}
-
-
-
-// Get earthquake data - async because we need to wait for the HTTP response
+document.getElementById("earthquake_data_url").href = url;
 const fetchEarthquakeData = async () => {
     let response = await fetch(url);
     if (response.ok) {
@@ -69,7 +29,7 @@ const fetchEarthquakeData = async () => {
                     "<b>Place: </b>" + json.features[i].properties.place +
                     "<br><b>Magnitude: </b>" + json.features[i].properties.mag +
                     "<br><b>Time: </b>" + new Date(json.features[i].properties.time))
-                .addTo(map);
+                .addTo(earthquakeLayer);
         }
         console.log("Fetched earthquake data");
     } else {
@@ -78,5 +38,68 @@ const fetchEarthquakeData = async () => {
 }
 
 
+// Add continental boundaries to map
+var boundaryLayer = L.geoJSON().addTo(map);
+var boundariesUrl = "https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_boundaries.json";
+const fetchContinentalBoundaries = async () => {
+    let response = await fetch(boundariesUrl);
+    if (response.ok) {
+        let json = await response.json();
+        for (let i = 0; i < json.features.length; i++) {
+            boundaryLayer.addData(json.features[i]);
+        }
+        console.log("Fetched continental boundaries");
+    } else {
+        alert("HTTP-Error: " + response.status);
+    }
+}
+
+
+// Animate earthquake
+function shake(magnitude) {
+    var el = document.getElementById("animatable");
+
+    // Set up magic numbers - they can be changed to prettify the animation
+    var max_frames = 100;       // Animation duration in frames
+    var refresh_interval = 20;  // In milliseconds
+    var speed = 0.42;           // Stretch/compress the curve on the time axis
+    var amplifier = 42;         // Make the shaking visible
+    // Superlinear function makes magnitude differences more perceptible
+    var mag_factor = Math.pow(magnitude, 2);
+
+    var current_frame = 0;
+    var anim = setInterval(animate, refresh_interval);
+
+    function animate() {
+        if (current_frame >= max_frames) {
+            clearInterval(anim);    // End animation
+            el.style.top = '0px';   // Reset position
+        } else {
+            current_frame++;
+
+            // Decrease max. amplitude with time to end the animation smoothly
+            var damp_factor = ((max_frames - current_frame) / max_frames);
+
+            // Use sinus to create harmonic oscillation as a baseline
+            el.style.top = Math.sin(current_frame * speed) *
+                mag_factor * amplifier * damp_factor + 'px';
+        }
+    }
+}
+
+
+// Enable the user to make continental boundaries and earthquakes (in)visible
+function addMapLayerControls() {
+    L.control.layers(
+        { "Satellite": satelliteLayer },
+        { "Earthquakes": earthquakeLayer, "Continental Boundaries": boundaryLayer },
+        { collapsed: true }
+    ).addTo(map);
+}
+
+
+
 // Execute all the stuff defined before
 fetchEarthquakeData();
+fetchContinentalBoundaries();
+addMapLayerControls();
