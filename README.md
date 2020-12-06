@@ -14,4 +14,6 @@ This project is a browser application which lets you re-experience worldwide ear
 
 ### Developer Info
 
-To get familiar with the earthquake dataset, you might want to take a look at `example_earthquakes.json` or visit the URL above.
+- To get familiar with the earthquake dataset, you might want to take a look at `example_earthquakes.json` or visit the USGS URL (above). 
+- A documentation of the Leaflet map library is available at https://leafletjs.com/.
+- The earthquake data is given in GeoJSON(P) format, which is supported natively by Leaflet: https://leafletjs.com/examples/geojson/
