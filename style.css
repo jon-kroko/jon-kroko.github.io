@@ -20,7 +20,7 @@ p {
 }
 
 #map {
-    height: 400px;
+    height: 70vh;
     width: 100%;
 }
 
@@ -34,6 +34,7 @@ p {
 
 #sources {
     font-size: 13px;
+    color: sandybrown;
 }
 
 #earthquake_data_url {
