@@ -7,7 +7,7 @@ This project is a browser application which lets you re-experience worldwide ear
 ### Installation
 
 1. Clone the repo
-1. Open `earthquake-simulator.html` in a browser of your choice
+1. Open `earthquake-simulator.html` in a browser of your choice (suggested: Firefox, Edge, Chrome)
 1. Follow the instructions in your browser
 
 
