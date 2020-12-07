@@ -19,6 +19,10 @@ p {
     font-size: 18px;
 }
 
+a {
+    color: sandybrown;
+}
+
 #map {
     height: 70vh;
     width: 100%;
@@ -34,9 +38,5 @@ p {
 
 #sources {
     font-size: 13px;
-    color: sandybrown;
-}
-
-#earthquake_data_url {
     color: sandybrown;
 }
