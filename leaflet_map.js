@@ -63,7 +63,7 @@ function shake(magnitude) {
     var max_frames = 100;       // Animation duration in frames
     var refresh_interval = 20;  // In milliseconds
     var speed = 0.42;           // Stretch/compress the curve on the time axis
-    var amplifier = 42;         // Make the shaking visible
+    var amplifier = 0.03 * window.innerHeight; // Make the shaking visible
     // Superlinear function makes magnitude differences more perceptible
     var mag_factor = Math.pow(magnitude, 2);
 
